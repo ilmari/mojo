@@ -67,6 +67,7 @@ sub map {
 }
 
 sub new {
+  return shift->SUPER::new(@_) if @_ > 2 or ref($_[1]) eq 'HASH';
   my $self = shift->SUPER::new;
   shift->(sub { $self->resolve(@_) }, sub { $self->reject(@_) }) if @_;
   return $self;
