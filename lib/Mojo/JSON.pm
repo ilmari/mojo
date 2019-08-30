@@ -48,7 +48,10 @@ sub decode_json {
 
 sub encode_json { encode('UTF-8', _encode_value(shift)) }
 
-sub false () {JSON::PP::false}
+BEGIN {
+    my $false = JSON::PP::false;
+    *false = sub () { $false };
+}
 
 sub from_json {
   my $err = _decode(\my $value, shift, 1);
@@ -62,7 +65,10 @@ sub j {
 
 sub to_json { _encode_value(shift) }
 
-sub true () {JSON::PP::true}
+BEGIN {
+    my $true = JSON::PP::true;
+    *true = sub () { $true };
+}
 
 sub _decode {
   my $valueref = shift;
